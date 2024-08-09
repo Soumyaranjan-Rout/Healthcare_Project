@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Deploy to k8s') {
             when {
-                branch 'master' // This is more reliable in declarative pipelines
+                echo "Current branch: ${env.GIT_BRANCH}"
             }
             steps {
                 script {
