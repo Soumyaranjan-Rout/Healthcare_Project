@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Deploy to k8s') {
             when {
-                echo "Current branch: ${env.GIT_BRANCH}"
+                when{ expression {env.GIT_BRANCH == 'master'}}
             }
             steps {
                 script {
