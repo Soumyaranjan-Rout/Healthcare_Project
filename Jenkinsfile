@@ -4,7 +4,7 @@ pipeline {
         stage('Build Maven') {
             steps {
                 git url: 'https://github.com/Soumyaranjan-Rout/demo1.git', branch: 'master'
-                sh 'mvn clean package'
+                sh 'mvn clean install'
             }
         }
         stage('Build Docker Image') {
