@@ -6,12 +6,25 @@
   - name: updating apt
     command : sudo apt-get update
 
-  - name : Install Docker
-    command : sudo apt-get install -y docker.io
+  - name: Check if Docker is installed
+  command: docker --version
+  register: docker_check
+  ignore_errors: yes
 
-  - name : Start Docker Service
-    command : sudo systemctl start docker
+  - name: Install Docker
+  apt:
+    name: docker.io
+    state: present
+  when: docker_check.failed
+ - name: Check if Docker service is running
+  command: systemctl is-active docker
+  register: docker_service_status
+  ignore_errors: yes
 
+- name: Start Docker Service
+  command: sudo systemctl start docker
+  when: docker_service_status.stdout != 'active'
+  
   - name : Create Depolyment
     command : sudo kubectl create deployment appdeployment image=soumyaranjanrout0/medicure-image:v1
 
