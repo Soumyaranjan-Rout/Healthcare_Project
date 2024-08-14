@@ -34,9 +34,9 @@
       ignore_errors: yes
 
     - name: Remove existing service if it exists
-        shell: |
+      shell: |
           sudo kubectl delete service appdeployment --ignore-not-found=true
-        ignore_errors: yes
+      ignore_errors: yes
 
     - name: Create Deployment
       ansible.builtin.command: sudo kubectl create deployment appdeployment --image=soumyaranjanrout0/medicure-image:v1
