@@ -28,7 +28,7 @@
       when: docker_service_status.stdout != 'active'
 
     - name: Delete all pods
-      command: kubectl delete pods --all
+      command: sudo kubectl delete pods --all
 
     - name: Create Deployment
       ansible.builtin.command: sudo kubectl create deployment appdeployment --image=soumyaranjanrout0/medicure-image:v1
