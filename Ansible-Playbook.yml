@@ -3,30 +3,25 @@
   become: true
   connection : ssh
   tasks : 
-  - name: updating apt
-    command : sudo apt-get update
-
-  - name: Check if Docker is installed
+- name: updating apt
+  command : sudo apt-get update
+- name: Check if Docker is installed
   command: docker --version
   register: docker_check
   ignore_errors: yes
-
-  - name: Install Docker
+- name: Install Docker
   apt:
     name: docker.io
     state: present
   when: docker_check.failed
- - name: Check if Docker service is running
+- name: Check if Docker service is running
   command: systemctl is-active docker
   register: docker_service_status
   ignore_errors: yes
-
 - name: Start Docker Service
   command: sudo systemctl start docker
   when: docker_service_status.stdout != 'active'
-  
-  - name : Create Depolyment
-    command : sudo kubectl create deployment appdeployment image=soumyaranjanrout0/medicure-image:v1
-
-  - name : Deploy the depolyment to nodeport with two replica
-    command : sudo kubectl expose deployment appdeployment --replicas=2 --port=8082 --type=NodePort
+- name : Create Depolyment
+  command : sudo kubectl create deployment appdeployment image=soumyaranjanrout0/medicure-image:v1
+- name : Deploy the depolyment to nodeport with two replica
+  command : sudo kubectl expose deployment appdeployment --replicas=2 --port=8082 --type=NodePort
