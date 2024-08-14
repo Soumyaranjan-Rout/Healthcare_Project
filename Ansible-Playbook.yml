@@ -27,8 +27,11 @@
       ansible.builtin.command: sudo systemctl start docker
       when: docker_service_status.stdout != 'active'
 
-    - name: Delete all pods
-      command: sudo kubectl delete deployments --all && sudo kubectl delete pods --all
+    - name: Remove all deployments and pods
+      shell: |
+        sudo kubectl delete deployments --all --namespace=default
+        sudo kubectl delete pods --all --namespace=default
+      ignore_errors: yes
 
     - name: Create Deployment
       ansible.builtin.command: sudo kubectl create deployment appdeployment --image=soumyaranjanrout0/medicure-image:v1
