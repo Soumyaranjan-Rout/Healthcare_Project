@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('checkout the code from github'){
             steps{
-                 git url: 'https://github.com/Soumyaranjan-Rout/demo1.git'
+                 git url: 'https://github.com/Soumyaranjan-Rout/Medicare_Project.git'
                  echo 'github url checkout'
             }
         }
